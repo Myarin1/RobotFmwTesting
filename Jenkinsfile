@@ -7,73 +7,51 @@ pipeline {
                description: 'Navigateur à utiliser')
     }
 
-    environment {
-        XRAY_BASE_URL = "https://xray.cloud.getxray.app"
-    }
-
     stages {
+        stage('Checkout') {
+            steps {
+                // Si ton projet n'est PAS sur Git, on saute cette étape
+                echo 'Projet local - pas de checkout Git'
+            }
+        }
 
         stage('Build & Test') {
-            steps {
-                dir('C:/dev/Jenkins/workspace/POEI2026/robotTest') {
-                    bat """
-                        robot ^
-                        --output output.xml ^
-                        --log log.html ^
-                        --report report.html ^
-                        --variable BROWSER:%SELENIUM_BROWSER% ^
-                        tests/product_test.robot
-                    """
-                }
-            }
-        }
+			steps {
 
-        stage('Generate XRAY Token') {
-            steps {
-                withCredentials([
-                    string(credentialsId: 'client_id', variable: 'CLIENT_ID'),
-                    string(credentialsId: 'client_secret', variable: 'CLIENT_SECRET')
-                ]) {
-                    script {
-                        // Exécution curl pour générer token XRAY
-                        def token = bat(
-                            script: """
-                                curl -s -X POST ^
-                                -H "Content-Type: application/json" ^
-                                -d "{\\"client_id\\":\\"%CLIENT_ID%\\",\\"client_secret\\":\\"%CLIENT_SECRET%\\"}" ^
-                                %XRAY_BASE_URL%/api/v2/authenticate
-                            """,
-                            returnStdout: true
-                        ).trim()
+				echo 'Execution d’un seul fichier Robot Framework...'
 
-                        // Nettoyage des guillemets
-                        env.XRAY_TOKEN = token.replace('"', '')
-                        echo "Token XRAY généré"
-                    }
-                }
-            }
-        }
-
+				dir('C:/dev/Jenkins/workspace/POEI2026/robotTest') {
+					bat '''
+						robot ^
+						--output output.xml ^
+						--log log.html ^
+						--report report.html ^
+						--variable BROWSER:%SELENIUM_BROWSER% ^
+						tests/product_test.robot
+					'''
+				}
+			}
+		}
         stage('Export results to XRAY') {
-            steps {
-                dir('C:/dev/Jenkins/workspace/POEI2026/robotTest') {
-                    bat """
-                        if not exist output.xml (echo output.xml introuvable & exit /b 1)
-                        
-                        curl -X POST ^
-                             -H "Authorization: Bearer %XRAY_TOKEN%" ^
-                             -F "file=@output.xml" ^
-                             %XRAY_BASE_URL%/api/v2/import/execution/robot?projectKey=POEI2
-                    """
-                }
-            }
-        }
-    }
+			steps {
+				echo 'Export des .json vers XRAY'
 
+				bat '''
+					curl -X POST ^
+					-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5hbnQiOiJiNmNhZGQwNS1lMzQxLTNmMTctYjU1Zi00OTM0MTI4MWQ4MmEiLCJhY2NvdW50SWQiOiI3MTIwMjA6MDAzMGIzMjMtNjQ3OC00MzYxLThlZjYtNjcyZjg3NWI4YTNlIiwiaXNYZWEiOmZhbHNlLCJpYXQiOjE3NzA4MDQxNjIsImV4cCI6MTc3MDg5MDU2MiwiYXVkIjoiNzJDNkI1MEYwRkU0NDY5REJGRjhFNzgwQUFBNUIzRkYiLCJpc3MiOiJjb20ueHBhbmRpdC5wbHVnaW5zLnhyYXkiLCJzdWIiOiI3MkM2QjUwRjBGRTQ0NjlEQkZGOEU3ODBBQUE1QjNGRiJ9.0fW9GXB4-qUSIGosEMygU8IWDcAZHbpNHjadzBOuls4" ^
+					-F "file=@C:/dev/Jenkins/workspace/POEI2026/PomPipeline/output.xml" ^
+					https://xray.cloud.getxray.app/api/v1/import/execution/robot?projectKey=POEI2-1042
+				'''
+			}
+		}
+
+	}
     post {
+
         success {
-            echo 'Tests exécutés et envoyés à XRAY 🎉'
+            echo 'Tests exécutés avec succès 🎉'
         }
+
         failure {
             echo 'Des tests ont échoué ❌'
         }
