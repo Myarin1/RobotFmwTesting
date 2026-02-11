@@ -1,11 +1,11 @@
 pipeline {
     agent any
 	
-	parameters {
-    		choice(name: 'SELENIUM_BROWSER',
-         	  choices: ['chrome', 'firefox', 'edge'],
-           	description: 'Navigateur à utiliser')
-	}
+    parameters {
+    	choice(name: 'SELENIUM_BROWSER',
+        choices: ['chrome', 'firefox', 'edge'],
+        description: 'Navigateur à utiliser')
+    }
 
     stages {
         stage('Checkout') {
