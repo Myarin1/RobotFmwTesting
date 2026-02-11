@@ -35,20 +35,20 @@ pipeline {
                     string(credentialsId: 'client_secret', variable: 'CLIENT_SECRET')
                 ]) {
                     script {
-                        // Utilisation de double quotes pour Windows + bat
-                        def response = bat(
+                        // Exécution curl pour générer token XRAY
+                        def token = bat(
                             script: """
                                 curl -s -X POST ^
                                 -H "Content-Type: application/json" ^
                                 -d "{\\"client_id\\":\\"%CLIENT_ID%\\",\\"client_secret\\":\\"%CLIENT_SECRET%\\"}" ^
-                                ${env.XRAY_BASE_URL}/api/v2/authenticate
+                                %XRAY_BASE_URL%/api/v2/authenticate
                             """,
                             returnStdout: true
                         ).trim()
 
-                        // Supprime les guillemets du JSON retourné
-                        env.XRAY_TOKEN = response.replace('"', '')
-                        echo "Token XRAY généré avec succès"
+                        // Nettoyage des guillemets
+                        env.XRAY_TOKEN = token.replace('"', '')
+                        echo "Token XRAY généré"
                     }
                 }
             }
@@ -58,15 +58,12 @@ pipeline {
             steps {
                 dir('C:/dev/Jenkins/workspace/POEI2026/robotTest') {
                     bat """
-                        if not exist output.xml (
-                            echo output.xml introuvable
-                            exit /b 1
-                        )
+                        if not exist output.xml (echo output.xml introuvable & exit /b 1)
                         
                         curl -X POST ^
                              -H "Authorization: Bearer %XRAY_TOKEN%" ^
                              -F "file=@output.xml" ^
-                             ${env.XRAY_BASE_URL}/api/v2/import/execution/robot?projectKey=POEI2-1042
+                             %XRAY_BASE_URL%/api/v2/import/execution/robot?projectKey=POEI2
                     """
                 }
             }
