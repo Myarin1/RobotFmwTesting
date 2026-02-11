@@ -1,56 +1,74 @@
 pipeline {
     agent any
-	
+
     parameters {
-    	choice(name: 'SELENIUM_BROWSER',
-        choices: ['chrome', 'firefox', 'edge'],
-        description: 'Navigateur à utiliser')
+        choice(name: 'SELENIUM_BROWSER',
+               choices: ['chrome', 'firefox', 'edge'],
+               description: 'Navigateur à utiliser')
+    }
+
+    environment {
+        XRAY_BASE_URL = "https://xray.cloud.getxray.app"
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Si ton projet n'est PAS sur Git, on saute cette étape
-                echo 'Projet local - pas de checkout Git'
-            }
-        }
 
         stage('Build & Test') {
             steps {
-				
                 dir('C:/dev/Jenkins/workspace/POEI2026/robotTest') {
-            	bat '''
-               		robot ^
-                	--output output.xml ^
-                	--log log.html ^
-                	--report report.html ^
-                	--variable BROWSER:%SELENIUM_BROWSER% ^
-                	tests/product_test.robot
-            	'''
-        	}
-
+                    bat '''
+                        robot ^
+                        --output output.xml ^
+                        --log log.html ^
+                        --report report.html ^
+                        --variable BROWSER:%SELENIUM_BROWSER% ^
+                        tests/product_test.robot
+                    '''
+                }
             }
         }
-        stage('Export results to XRAY') {
-    steps {
-        echo 'Export des .xml vers XRAY'
 
-	bat '''
-    	curl -X POST ^
-         -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5hbnQiOiJiNmNhZGQwNS1lMzQxLTNmMTctYjU1Zi00OTM0MTI4MWQ4MmEiLCJhY2NvdW50SWQiOiI3MTIwMjA6MDAzMGIzMjMtNjQ3OC00MzYxLThlZjYtNjcyZjg3NWI4YTNlIiwiaXNYZWEiOmZhbHNlLCJpYXQiOjE3NzA2MjcwMjYsImV4cCI6MTc3MDcxMzQyNiwiYXVkIjoiNzJDNkI1MEYwRkU0NDY5REJGRjhFNzgwQUFBNUIzRkYiLCJpc3MiOiJjb20ueHBhbmRpdC5wbHVnaW5zLnhyYXkiLCJzdWIiOiI3MkM2QjUwRjBGRTQ0NjlEQkZGOEU3ODBBQUE1QjNGRiJ9.3LRLZS9HhxLWxX0oy4pCYmBW1naSuIMMPs9t4NzDkts" ^
-         -F "file=@C:/dev/Jenkins/workspace/POEI2026/robotTest/output.xml" ^
-         https://xray.cloud.getxray.app/api/v1/import/execution/robot?projectKey=POEI2-1042
-	'''
-		}
-	}
+        stage('Generate XRAY Token') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'client_id', variable: 'CLIENT_ID'),
+                    string(credentialsId: 'cliet_secret', variable: 'CLIENT_SECRET')
+                ]) {
+                    script {
+                        def response = bat(
+                            script: """
+                                curl -s -X POST ^
+                                -H "Content-Type: application/json" ^
+                                -d "{\\"client_id\\": \\"%CLIENT_ID%\\", \\"client_secret\\": \\"%CLIENT_SECRET%\\"}" ^
+                                ${env.XRAY_BASE_URL}/api/v2/authenticate
+                            """,
+                            returnStdout: true
+                        ).trim()
 
-	}
-    post {
-
-        success {
-            echo 'Tests exécutés avec succès 🎉'
+                        env.XRAY_TOKEN = response.replace('"', '')
+                    }
+                }
+            }
         }
 
+        stage('Export results to XRAY') {
+            steps {
+                dir('C:/dev/Jenkins/workspace/POEI2026/robotTest') {
+                    bat '''
+                        curl -X POST ^
+                             -H "Authorization: Bearer %XRAY_TOKEN%" ^
+                             -F "file=@output.xml" ^
+                             https://xray.cloud.getxray.app/api/v2/import/execution/robot?projectKey=POEI2
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Tests exécutés et envoyés à XRAY 🎉'
+        }
         failure {
             echo 'Des tests ont échoué ❌'
         }
