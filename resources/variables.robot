@@ -1,7 +1,7 @@
 *** Variables ***
 ${URL}          https://www.saucedemo.com/
 ${BROWSER}      chrome
-${USERNAME}     standard_user
+${USERNAME}     standard_userr
 ${PASSWORD}     secret_sauce
 ${WRONG_PASSWORD}  mauvais_mdp
 ${FNAME_ATTRIB}   Cyril
