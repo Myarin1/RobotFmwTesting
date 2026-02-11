@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.13.12 on win32)" generated="2026-02-10T11:54:11.738272" rpa="false" schemaversion="5">
+<suite id="s1" name="firstTest" source="C:\dev\RobotFramework\firstTest.robot">
+<test id="s1-t1" name="Login Test" line="12">
+<kw name="Login">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2026-02-10T11:54:11.903439" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<arg>${monURL}</arg>
+<arg>${browser}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2026-02-10T11:54:11.903258" elapsed="1.191114"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-02-10T11:54:13.094974" level="INFO">Typing text 'standard_user' into text field 'id=user-name'.</msg>
+<arg>id=user-name</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-10T11:54:13.094578" elapsed="0.058149"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-02-10T11:54:13.153126" level="INFO">Typing text 'secret_sauce' into text field 'id=password'.</msg>
+<arg>id=password</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-10T11:54:13.152906" elapsed="0.042477"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2026-02-10T11:54:13.195723" level="INFO">Clicking button 'id=login-button'.</msg>
+<arg>id=login-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-10T11:54:13.195549" elapsed="0.056239"/>
+</kw>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<arg>${monURL}</arg>
+<arg>${browser}</arg>
+<status status="PASS" start="2026-02-10T11:54:11.902642" elapsed="1.349265"/>
+</kw>
+<kw name="Vérifier affichage de la page Product">
+<kw name="Page Should Contain Element" owner="SeleniumLibrary">
+<msg time="2026-02-10T11:54:13.259146" level="INFO">Current page contains element 'xpath://div[text()='Sauce Labs Backpack']'.</msg>
+<arg>xpath://div[text()='Sauce Labs Backpack']</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<status status="PASS" start="2026-02-10T11:54:13.252539" elapsed="0.006684"/>
+</kw>
+<status status="PASS" start="2026-02-10T11:54:13.252295" elapsed="0.007008"/>
+</kw>
+<status status="PASS" start="2026-02-10T11:54:11.902102" elapsed="1.357399"/>
+</test>
+<status status="PASS" start="2026-02-10T11:54:11.739426" elapsed="1.520690"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="firstTest" id="s1" pass="1" fail="0" skip="0">firstTest</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

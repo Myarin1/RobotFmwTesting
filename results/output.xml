@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.13.12 on win32)" generated="2026-02-10T16:36:37.672419" rpa="false" schemaversion="5">
+<suite id="s1" name="RobotFramework" source="C:\dev\RobotFramework">
+<suite id="s1-s1" name="Resources" source="C:\dev\RobotFramework\resources">
+<suite id="s1-s1-s1" name="Common" source="C:\dev\RobotFramework\resources\Common.robot">
+<test id="s1-s1-s1-t1" name="Test Import" line="29">
+<kw name="Exporter Tests XRAY">
+<msg time="2026-02-10T16:36:37.874880" level="FAIL">Keyword 'Exporter Tests XRAY' expected 0 arguments, got 5.</msg>
+<arg>${JIRA_URL}</arg>
+<arg>${CLIENT_ID}</arg>
+<arg>${CLIENT_SECRET}</arg>
+<arg>@{TEST_KEYS}</arg>
+<arg>output_folder=features</arg>
+<status status="FAIL" start="2026-02-10T16:36:37.874539" elapsed="0.001958">Keyword 'Exporter Tests XRAY' expected 0 arguments, got 5.</status>
+</kw>
+<status status="FAIL" start="2026-02-10T16:36:37.872465" elapsed="0.004319">Keyword 'Exporter Tests XRAY' expected 0 arguments, got 5.</status>
+</test>
+<status status="FAIL" start="2026-02-10T16:36:37.707975" elapsed="0.170998"/>
+</suite>
+<status status="FAIL" start="2026-02-10T16:36:37.704907" elapsed="0.176847"/>
+</suite>
+<status status="FAIL" start="2026-02-10T16:36:37.676287" elapsed="0.207556"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="RobotFramework" id="s1" pass="0" fail="1" skip="0">RobotFramework</stat>
+<stat name="Resources" id="s1-s1" pass="0" fail="1" skip="0">RobotFramework.Resources</stat>
+<stat name="Common" id="s1-s1-s1" pass="0" fail="1" skip="0">RobotFramework.Resources.Common</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2026-02-10T16:36:37.865003" level="ERROR">Error in file 'C:\dev\RobotFramework\resources\Common.robot' on line 4: Importing library 'C:\dev\RobotFramework\scripts\importsJira.py' failed: ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "C:\dev\RobotFramework\scripts\importsJira.py", line 3, in &lt;module&gt;
+    import requests
+PYTHONPATH:
+  C:\dev\RobotFramework\scripts
+  C:\dev\RobotFramework\lib
+  C:\dev\RobotFramework\resources
+  c:\Users\IB\.vscode\extensions\d-biehl.robotcode-2.2.0\bundled\libs
+  c:\Users\IB\.vscode\extensions\d-biehl.robotcode-2.2.0\bundled\tool\robotcode
+  C:\Users\IB\AppData\Local\Programs\Python\Python313\python313.zip
+  C:\Users\IB\AppData\Local\Programs\Python\Python313\DLLs
+  C:\Users\IB\AppData\Local\Programs\Python\Python313\Lib
+  C:\Users\IB\AppData\Local\Programs\Python\Python313
+  C:\Users\IB\AppData\Local\Programs\Python\Python313\Lib\site-packages</msg>
+</errors>
+</robot>
