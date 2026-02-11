@@ -37,11 +37,9 @@ pipeline {
 				echo 'Export des .xml vers XRAY'
 
 				bat '''
-					if not exist output.xml (echo output.xml introuvable & exit /b 1)
-                			for %%F in (output.xml) do if %%~zF EQU 0 (echo output.xml vide & exit /b 1)
-					curl -X POST ^
+					curl -H "Content-Type: text/xml" -X POST ^
 					-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5hbnQiOiJiNmNhZGQwNS1lMzQxLTNmMTctYjU1Zi00OTM0MTI4MWQ4MmEiLCJhY2NvdW50SWQiOiI3MTIwMjA6MDAzMGIzMjMtNjQ3OC00MzYxLThlZjYtNjcyZjg3NWI4YTNlIiwiaXNYZWEiOmZhbHNlLCJpYXQiOjE3NzA4MDQxNjIsImV4cCI6MTc3MDg5MDU2MiwiYXVkIjoiNzJDNkI1MEYwRkU0NDY5REJGRjhFNzgwQUFBNUIzRkYiLCJpc3MiOiJjb20ueHBhbmRpdC5wbHVnaW5zLnhyYXkiLCJzdWIiOiI3MkM2QjUwRjBGRTQ0NjlEQkZGOEU3ODBBQUE1QjNGRiJ9.0fW9GXB4-qUSIGosEMygU8IWDcAZHbpNHjadzBOuls4" ^
-					-F "file=@C:/dev/Jenkins/workspace/POEI2026/robotTest/output.xml" ^
+					--data @"file=@C:/dev/Jenkins/workspace/POEI2026/robotTest/output.xml" ^
 					https://xray.cloud.getxray.app/api/v1/import/execution/robot?projectKey=POEI2-1042
 				'''
 			}
