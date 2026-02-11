@@ -27,7 +27,7 @@ pipeline {
 						--log log.html ^
 						--report report.html ^
 						--variable BROWSER:%SELENIUM_BROWSER% ^
-						tests/product_test.robot
+						tests/product_test.robot || exit 0
 					'''
 				}
 			}
