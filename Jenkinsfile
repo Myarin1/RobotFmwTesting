@@ -32,7 +32,7 @@ pipeline {
             steps {
                 withCredentials([
                     string(credentialsId: 'client_id', variable: 'CLIENT_ID'),
-                    string(credentialsId: 'cliet_secret', variable: 'CLIENT_SECRET')
+                    string(credentialsId: 'client_secret', variable: 'CLIENT_SECRET')
                 ]) {
                     script {
                         def response = bat(
