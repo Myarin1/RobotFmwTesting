@@ -66,7 +66,7 @@ pipeline {
                         curl -X POST ^
                              -H "Authorization: Bearer %XRAY_TOKEN%" ^
                              -F "file=@output.xml" ^
-                             ${env.XRAY_BASE_URL}/api/v2/import/execution/robot?projectKey=POEI2
+                             ${env.XRAY_BASE_URL}/api/v2/import/execution/robot?projectKey=POEI2-1042
                     """
                 }
             }
