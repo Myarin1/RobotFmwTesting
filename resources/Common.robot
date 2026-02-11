@@ -14,3 +14,4 @@ Nettoyage
 Screenshot Avec Nom Du Test
     ${safe_name}=    Replace String    ${TEST NAME}    ${SPACE}    _
     Capture Page Screenshot    ${safe_name + "_error"}.png
+    

@@ -1,53 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.4.1 (Python 3.13.12 on win32)" generated="2026-02-10T16:36:37.672419" rpa="false" schemaversion="5">
+<robot generator="Robot 7.4.1 (Python 3.13.12 on win32)" generated="2026-02-11T10:26:41.059668" rpa="false" schemaversion="5">
 <suite id="s1" name="RobotFramework" source="C:\dev\RobotFramework">
-<suite id="s1-s1" name="Resources" source="C:\dev\RobotFramework\resources">
-<suite id="s1-s1-s1" name="Common" source="C:\dev\RobotFramework\resources\Common.robot">
-<test id="s1-s1-s1-t1" name="Test Import" line="29">
-<kw name="Exporter Tests XRAY">
-<msg time="2026-02-10T16:36:37.874880" level="FAIL">Keyword 'Exporter Tests XRAY' expected 0 arguments, got 5.</msg>
-<arg>${JIRA_URL}</arg>
-<arg>${CLIENT_ID}</arg>
-<arg>${CLIENT_SECRET}</arg>
-<arg>@{TEST_KEYS}</arg>
-<arg>output_folder=features</arg>
-<status status="FAIL" start="2026-02-10T16:36:37.874539" elapsed="0.001958">Keyword 'Exporter Tests XRAY' expected 0 arguments, got 5.</status>
+<suite id="s1-s1" name="Tests" source="C:\dev\RobotFramework\tests">
+<suite id="s1-s1-s1" name="Product Test" source="C:\dev\RobotFramework\tests\product_test.robot">
+<test id="s1-s1-s1-t1" name="Test Ajout produit" line="11">
+<kw name="Initialisation Test" owner="Common" type="SETUP">
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2026-02-11T10:26:41.323430" elapsed="0.000274"/>
 </kw>
-<status status="FAIL" start="2026-02-10T16:36:37.872465" elapsed="0.004319">Keyword 'Exporter Tests XRAY' expected 0 arguments, got 5.</status>
+<status status="PASS" start="2026-02-11T10:26:41.322708" elapsed="0.001126"/>
+</kw>
+<kw name="Login" owner="LoginPage">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2026-02-11T10:26:41.324747" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<arg>${url}</arg>
+<arg>${browser}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2026-02-11T10:26:41.324466" elapsed="2.098306"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2026-02-11T10:26:43.423029" elapsed="0.028351"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-02-11T10:26:43.452164" level="INFO">Typing text 'standard_user' into text field 'id=user-name'.</msg>
+<arg>${USERNAME_FIELD}</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-11T10:26:43.451621" elapsed="0.062093"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-02-11T10:26:43.514404" level="INFO">Typing text 'secret_sauce' into text field 'id=password'.</msg>
+<arg>${PASSWORD_FIELD}</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-11T10:26:43.513977" elapsed="0.047555"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2026-02-11T10:26:43.562131" level="INFO">Clicking button 'xpath=//input[@data-test='login-button']'.</msg>
+<arg>${LOGIN_BUTTON}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-11T10:26:43.561763" elapsed="0.062294"/>
+</kw>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<status status="PASS" start="2026-02-11T10:26:41.324082" elapsed="2.300155"/>
+</kw>
+<kw name="Page Product visible" owner="ProductPage">
+<kw name="Page Should Contain Element" owner="SeleniumLibrary">
+<msg time="2026-02-11T10:26:43.632139" level="INFO">Current page contains element 'xpath=//div[text()='Sauce Labs Backpack']'.</msg>
+<arg>${PRODUCT_TITLE}</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<status status="PASS" start="2026-02-11T10:26:43.624988" elapsed="0.007607"/>
+</kw>
+<status status="PASS" start="2026-02-11T10:26:43.624625" elapsed="0.008191"/>
+</kw>
+<kw name="Ajout produit au panier" owner="ProductPage">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-02-11T10:26:43.634235" level="INFO">Clicking element '//button[@data-test='add-to-cart-sauce-labs-backpack']'.</msg>
+<arg>${ADDTOCARTBACKPACK}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-11T10:26:43.633787" elapsed="0.037084"/>
+</kw>
+<status status="PASS" start="2026-02-11T10:26:43.633231" elapsed="0.037815"/>
+</kw>
+<kw name="Clic bouton panier" owner="ProductPage">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-02-11T10:26:43.672133" level="INFO">Clicking element '//a[@data-test='shopping-cart-link']'.</msg>
+<arg>${BOUTON_PANIER}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-11T10:26:43.671860" elapsed="0.039287"/>
+</kw>
+<status status="PASS" start="2026-02-11T10:26:43.671439" elapsed="0.040103"/>
+</kw>
+<kw name="Page Product visible" owner="ProductPage">
+<kw name="Page Should Contain Element" owner="SeleniumLibrary">
+<msg time="2026-02-11T10:26:43.719020" level="INFO">Current page contains element 'xpath=//div[text()='Sauce Labs Backpack']'.</msg>
+<arg>${PRODUCT_TITLE}</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<status status="PASS" start="2026-02-11T10:26:43.712548" elapsed="0.006899"/>
+</kw>
+<status status="PASS" start="2026-02-11T10:26:43.712089" elapsed="0.007525"/>
+</kw>
+<kw name="Nettoyage" owner="Common" type="TEARDOWN">
+<kw name="Run Keyword If Test Failed" owner="BuiltIn">
+<arg>Screenshot Avec Nom Du Test</arg>
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<status status="PASS" start="2026-02-11T10:26:43.720755" elapsed="0.000451"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2026-02-11T10:26:43.721376" elapsed="2.112938"/>
+</kw>
+<status status="PASS" start="2026-02-11T10:26:43.720108" elapsed="2.114745"/>
+</kw>
+<status status="PASS" start="2026-02-11T10:26:41.320320" elapsed="4.515367"/>
 </test>
-<status status="FAIL" start="2026-02-10T16:36:37.707975" elapsed="0.170998"/>
+<status status="PASS" start="2026-02-11T10:26:41.111864" elapsed="4.732411"/>
 </suite>
-<status status="FAIL" start="2026-02-10T16:36:37.704907" elapsed="0.176847"/>
+<status status="PASS" start="2026-02-11T10:26:41.106535" elapsed="4.740484"/>
 </suite>
-<status status="FAIL" start="2026-02-10T16:36:37.676287" elapsed="0.207556"/>
+<status status="PASS" start="2026-02-11T10:26:41.073110" elapsed="4.776291"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tests</stat>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="RobotFramework" id="s1" pass="0" fail="1" skip="0">RobotFramework</stat>
-<stat name="Resources" id="s1-s1" pass="0" fail="1" skip="0">RobotFramework.Resources</stat>
-<stat name="Common" id="s1-s1-s1" pass="0" fail="1" skip="0">RobotFramework.Resources.Common</stat>
+<stat name="RobotFramework" id="s1" pass="1" fail="0" skip="0">RobotFramework</stat>
+<stat name="Tests" id="s1-s1" pass="1" fail="0" skip="0">RobotFramework.Tests</stat>
+<stat name="Product Test" id="s1-s1-s1" pass="1" fail="0" skip="0">RobotFramework.Tests.Product Test</stat>
 </suite>
 </statistics>
 <errors>
-<msg time="2026-02-10T16:36:37.865003" level="ERROR">Error in file 'C:\dev\RobotFramework\resources\Common.robot' on line 4: Importing library 'C:\dev\RobotFramework\scripts\importsJira.py' failed: ModuleNotFoundError: No module named 'requests'
-Traceback (most recent call last):
-  File "C:\dev\RobotFramework\scripts\importsJira.py", line 3, in &lt;module&gt;
-    import requests
-PYTHONPATH:
-  C:\dev\RobotFramework\scripts
-  C:\dev\RobotFramework\lib
-  C:\dev\RobotFramework\resources
-  c:\Users\IB\.vscode\extensions\d-biehl.robotcode-2.2.0\bundled\libs
-  c:\Users\IB\.vscode\extensions\d-biehl.robotcode-2.2.0\bundled\tool\robotcode
-  C:\Users\IB\AppData\Local\Programs\Python\Python313\python313.zip
-  C:\Users\IB\AppData\Local\Programs\Python\Python313\DLLs
-  C:\Users\IB\AppData\Local\Programs\Python\Python313\Lib
-  C:\Users\IB\AppData\Local\Programs\Python\Python313
-  C:\Users\IB\AppData\Local\Programs\Python\Python313\Lib\site-packages</msg>
+<msg time="2026-02-11T10:26:41.305947" level="WARN">Error in file 'C:\dev\RobotFramework\pages\LoginPage.robot' on line 2: Suite 'RobotFramework.Tests.Product Test' has already imported library 'SeleniumLibrary' with different arguments. This import is ignored.</msg>
+<msg time="2026-02-11T10:26:41.313510" level="WARN">Error in file 'C:\dev\RobotFramework\pages\ProductPage.robot' on line 2: Suite 'RobotFramework.Tests.Product Test' has already imported library 'SeleniumLibrary' with different arguments. This import is ignored.</msg>
 </errors>
 </robot>
